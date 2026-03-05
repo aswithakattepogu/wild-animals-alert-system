@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('about')}}" style="color: white; padding-left: 30px;">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('prediction')}}" style="color: yellow; padding-left: 30px;">Prediction</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <center>
+        <div style="margin-top: 50px; min-height: 1100px; height: auto; background-color: rgba(0, 0, 0, 0.655);">
+            <div class="container-fluid" style="margin-top: -50px;">
+                <div class="contact_section_2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <center>
+                                <div id="uploadedImage" style="display:none;">
+                                    <img id="image" src="" style="height: 200px; width: 200px;"><br><br>
+                                </div><br><br>
+
+                                <div id="result"></div><br>
+                                <button id="stopButton" style="display:none;" class="btn btn-danger" onclick="stopSiren()">Stop Siren</button><br><br>
+                            </center>
+
+                            <form action="{{url_for('prediction')}}" method="post" enctype="multipart/form-data" style="background-color: rgba(36, 158, 164, 0.879); width: 600px; border-radius: 10px; margin-top: 0px; margin-left: 30px; padding: 20px;">
+                                <h1 class="contact_taital" style="color: rgba(0, 0, 0, 0.849);"><br>Upload Image here!</h1>
+    
+                                <div class="col-10">
+                                    <input type="file" name="img" class="mail_text" required>
+    
+                                    <button type="submit" class="btn btn-success" style="margin-top: 20px; width: 30%;">Submit</button><br><br>
+                                </div>
+                            </form><br><br>
+                        </div>
+
+                        <script>
+                            const form = document.querySelector('form');
+                            form.addEventListener('submit', async (e) => {
+                                e.preventDefault();
+                                const formData = new FormData(form);
+                                const response = await fetch('/prediction', {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                                const result = await response.json();
+                                const resultDiv = document.getElementById('result');
+                                const stopButton = document.getElementById('stopButton');
+                                const uploadedImage = document.getElementById('uploadedImage');
+                                const imageElement = document.getElementById('image');
+                                
+                                if (result.prediction) {
+                                    resultDiv.innerHTML = `<h2 style="color: white;">Prediction: ${result.predicted_class}</h2>`;
+                                    if (result.prediction === 'Danger') {
+                                        stopButton.style.display = 'inline-block';  // Show the stop button if Danger is predicted
+                                    } else {
+                                        stopButton.style.display = 'none';  // Hide the stop button if Normal is predicted
+                                    }
+                                    
+                                    // Show the uploaded image
+                                    uploadedImage.style.display = 'block';  // Show image div
+                                    imageElement.src = `/static/saves_images/${result.file_name}`;  // Set image source dynamically
+                                } else {
+                                    resultDiv.innerHTML = `<h2>Error: ${result.error}</h2>`;
+                                }
+                            });
+                    
+                            async function stopSiren() {
+                                const response = await fetch('/stop', { method: 'POST' });
+                                const result = await response.json();
+                                alert(result.message);
+                                document.getElementById('stopButton').style.display = 'none';  // Hide the stop button after stopping the siren
+                            }
+                        </script>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+{% endblock %}

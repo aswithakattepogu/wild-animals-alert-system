@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home')}}" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('about')}}" style="color: yellow; padding-left: 30px;">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('prediction')}}" style="color: white; padding-left: 30px;">Prediction</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('index')}}" style="color: white; padding-left: 30px;">Logout</a>
+        </li>
+    </ul>
+{% endblock %}
+               
+
+{% block content %}
+    <div class="banner_section layout_padding" style="display: flex; align-items: center; justify-content: center; height: fit-content; background-color: rgba(0, 0, 0, 0.63);">
+        <div class="container">
+            <div id="banner_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="banner_taital_main text-center" style="margin-top: -110px;">
+                            
+                            <h1 class="banner_taital" style="color: white;">About!</h1>
+                            <pre>
+                                <p class="banner_text" style="background-color: rgba(0, 0, 0, 0.836); color: white; padding: 30px; text-align: justify;">
+This project aims to detect the presence of wild animals such as Cheetahs, Foxes, Hyenas, Lions, Tigers, and Wolves using deep learning models, including CNN, MobileNet, and ResNet. The system processes images of these animals and triggers immediate responses to ensure the safety of nearby civilians. Upon detecting an animal, the system activates a siren and sends SMS and email notifications to the nearest officer for swift action. The dataset used for training the models contains images of the aforementioned animals, ensuring effective detection within different environmental contexts. This automated approach is designed to minimize human-wildlife conflict by providing timely alerts, allowing authorities to take proactive measures and alert civilians to potential risks. The combination of advanced deep learning techniques with alert mechanisms creates an efficient and scalable solution for enhancing safety in areas prone to wild animal encounters.
+
+
+The primary objective of this project is to design an intelligent system that can detect wild animal activity and provide immediate alerts to enhance public safety and minimize human-wildlife conflict. By utilizing advanced deep learning models like CNN, MobileNet, and ResNet, the system aims to process images of specific wild animals—Cheetah, Fox, Hyena, Lion, Tiger, and Wolf—and trigger instant responses upon detection. This includes activating a siren to warn nearby individuals and sending SMS and email notifications to the nearest authorities, enabling timely action to mitigate risks.
+The project also focuses on creating a scalable and adaptable solution that can be easily implemented in wildlife-prone areas such as national parks, reserves, and regions near human settlements. Through automated detection, the system aims to significantly reduce response times, ensuring swift intervention to protect both humans and animals. Additionally, the system will contribute to raising awareness about wildlife conservation and reducing potential harm to both wildlife and local communities. Ultimately, the project seeks to improve the safety of civilians while also safeguarding the welfare of wild animals by ensuring that any close encounters are managed efficiently and proactively.
+
+                                </p>
+                            </pre>
+                            <h5 class="tasty_text">
+                                "Leveraging Deep Learning for accurate Wild Animal Activity Detection and Automated Alert System to Enhance Wildlife Monitoring and Conservation Efforts."
+                            </h5>
+                            
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
